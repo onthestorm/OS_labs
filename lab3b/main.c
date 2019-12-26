@@ -64,7 +64,7 @@ int main() {
                 perror("PARENT: Can't open FIFO\n");
                 exit(0);
             }
-            write(fd, str, 64);
+            write(fd, str, 80);
             waitpid(pid, &exit_code, 0);
             close(fd);
         }

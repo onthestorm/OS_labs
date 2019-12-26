@@ -52,7 +52,7 @@ int main() {
 
             printf("parent sending: %s\n", str);
 
-            write(fd[1], str, 64);
+            write(fd[1], str, 80);
             waitpid(pid, &exit_code, 0);
             close(fd[1]);
         }
