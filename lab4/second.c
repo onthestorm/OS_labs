@@ -13,7 +13,7 @@ int main() {
     char * str;
     
     sleep(1);
-    key_t key = ftok("./key_t", 28);
+    key_t key = ftok("key_t", 28);
 
     if(key == -1)
     {
