@@ -14,6 +14,7 @@ int main() {
     struct dirent **namelist;
     struct stat file_stat;
     int n;
+    char mode[11], buf[14];
     n = scandir(".", &namelist, NULL, alphasort);
     if (n < 0)
         perror("scandir");
@@ -22,7 +23,6 @@ int main() {
         while(n--) {
             stat(namelist[n]->d_name, &file_stat);
 
-            char mode[11];
             memset(mode, '-', sizeof(char) * 11);
             getMode(file_stat.st_mode, mode);
 
@@ -32,7 +32,6 @@ int main() {
             grp = getgrgid(file_stat.st_gid);
 
             struct tm * m_time;
-            char buf[14];
 
             m_time = localtime(&file_stat.st_ctime);
             strftime(buf, 14, "%b %d %R", m_time);

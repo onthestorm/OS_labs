@@ -23,48 +23,32 @@ int main() {
         case 0: {
             close(fd[1]);
             sleep(1);
-            char readed[64];
+            char readed[80];
 
-            read(fd[0], &readed, 64);
+            read(fd[0], &readed, 80);
             printf("READED FROM FD : %s\n", readed);
 
-            char str[64] ={"Time in child procces with pid "};
             char buf[9];
 
             s_time = time(NULL);
             m_time = localtime(&s_time);
             strftime(buf, 9, "%X", m_time);
 
-            char * mypid = malloc(sizeof(pid_t) + 1);
-            sprintf(mypid, "%d", getpid());
-            char * myppid = malloc(sizeof(pid_t) + 1);
-            sprintf(myppid, "%d", getppid());
-
-            strcat(str, mypid);
-            strcat(str, " with parent pid ");
-            strcat(str, myppid);
-            strcat(str, " is ");
-            strcat(str, buf);
-            printf("%s\n", str);
+            printf("Time in child procces with pid %d with parent pid %d is %s\n", getpid(), getppid(), buf);
             close(fd[0]);
             exit(exit_code);
         }
 
         default: {
             close(fd[0]);
-            char str[64] ={"Time in parent procces with pid "};
+            char str[80];
             char buf[9];
 
             s_time = time(NULL);
             m_time = localtime(&s_time);
             strftime(buf, 9, "%X", m_time);
 
-            char * mypid = malloc(sizeof(pid_t) + 1);
-            sprintf(mypid, "%d", getpid());
-
-            strcat(str, mypid);
-            strcat(str, " is ");
-            strcat(str, buf);
+            sprintf(str, "Time in parent procces with pid %d is %s", getpid(), buf);
 
             printf("parent sending: %s\n", str);
 
