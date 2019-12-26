@@ -10,8 +10,9 @@
 int main() {
     int shm;
     char * str;
-
-    shm = (shmget(3333, 128, IPC_CREAT | 0660));
+    
+    key_t key = ftok("key_t", 28);
+    shm = shmget(key, 128, IPC_CREAT | 0660);
 
     if(shm == -1) {
         perror("first : shm not created");
@@ -25,11 +26,20 @@ int main() {
     }
 
     int i = 0;
+
     while(i < 30) {
-        time_t m_time = time(NULL);
-        sprintf(str, "%.12s from pid %d", 4 + ctime(&m_time), getpid());
+        char buf[9];
+        struct tm * m_time;
+        long int s_time = time(NULL);
+        m_time = localtime(&s_time);
+        strftime(buf, 9, "%X", m_time);
+        sprintf(str, "%s from pid %d", buf, getpid());
+        sleep(1);
         i++;
     }
+
+    struct shmid_ds shmds;
+    shmctl(shm, IPC_RMID, &shmds);
 
     shmdt(str);
     return 0;

@@ -31,7 +31,13 @@ int main() {
             struct group *grp;
             grp = getgrgid(file_stat.st_gid);
 
-            printf("%s %s %s %8ld %.12s %s\n", mode, pwd->pw_name, grp->gr_name, file_stat.st_size, 4 + ctime(&file_stat.st_mtime), namelist[n]->d_name);
+            struct tm * m_time;
+            char buf[14];
+
+            m_time = localtime(&file_stat.st_ctime);
+            strftime(buf, 14, "%b %d %R", m_time);
+
+            printf("%s %s %s %8ld %s %s\n", mode, pwd->pw_name, grp->gr_name, file_stat.st_size, buf, namelist[n]->d_name);
             free(namelist[n]);
         }
         free(namelist);

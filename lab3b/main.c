@@ -72,6 +72,8 @@ int main() {
             strcat(str, mypid);
             strcat(str, " is ");
             strcat(str, buf);
+            
+            printf("parent sending : %s\n", buf);
 
             int fd = open("FIFO", O_WRONLY);
             if(fd == -1) {

@@ -66,6 +66,8 @@ int main() {
             strcat(str, " is ");
             strcat(str, buf);
 
+            printf("parent sending: %s\n", str);
+
             write(fd[1], str, 64);
             waitpid(pid, &exit_code, 0);
             close(fd[1]);
